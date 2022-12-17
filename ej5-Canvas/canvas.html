@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf 8" />
+    <title>Canvas</title>
+  </head>
+  <body>
+    <center>
+      <canvas
+        id="myCanvas"
+        width="1000"
+        height="550"
+        style="border: 1px solid #000000"
+      >
+        Your browser does not support the HTML canvas tag.
+      </canvas>
+    </center>
+
+    <script type="text/javascript">
+      // Manipular el canvas
+      let canvas = document.getElementById("myCanvas");
+      let ctx = canvas.getContext("2d");
+      
+      // Elegir un color aleatorio
+      ctx.fillStyle = "#" + Math.floor(Math.random()*16777215).toString(16);
+      
+      // Propiedades de la bola
+      let xBall = canvas.width - 15, yBall = canvas.height / 2, r= 15, sAngle=0, eAngle= 2 * Math.PI;
+      let xSpeed = Math.floor(Math.random() * 7) + 2;
+      let ySpeed = - (Math.floor(Math.random() * 7) + 2);
+      const width = 15, height = 15;
+
+      //Propiedades del rectángulo
+      let xRect = (canvas.width / 2) - 100, yRect = canvas.height - 50, widthRect = 200, heightRect = 10;
+      
+      // Propiedades del fondo
+      let img = new Image();
+      img.src = "background.png";
+ 
+      window.addEventListener("load", (event) =>{
+        init();
+      });
+
+      window.addEventListener('keydown', (event) =>{
+        if (event.keyCode === 37){
+          xRect = xRect - 100;
+        }
+        else if (event.keyCode === 39){
+          xRect = xRect + 100
+        }
+      });
+      function init(){
+        window.requestAnimationFrame(draw);       
+      }
+   
+      function draw (timestamp){
+        console.log(timestamp);
+        if (xBall < 7.5 || xBall > (canvas.width - width)){                                                     // Definir los bordes en el eje x para la bola (izquierdo y derecho)
+          xSpeed *= -1;
+        }
+        
+        if (yBall + height/2 >= yRect && (xBall < (xRect + widthRect ) && xBall >= xRect)){                     // Interacción con el rectángulo
+          xSpeed *= -1;
+          ySpeed *= -1;
+        }
+                
+        if (yBall < 7.5){                                                                                       // Definir los bordes en el eje y para la bola (arriba)
+          ySpeed *= -1;
+        }
+
+        if (yBall > (canvas.height - height)){                                                                  // Se ha tocado el margen de abajo y se acaba la partida
+          alert("Game over");
+          exit;
+        }
+        
+        xBall += xSpeed;
+        yBall += ySpeed;
+
+        if (xRect < 0){                                                                                         // Definir el borde de la barra por la izquierda en el eje x
+          xRect = 0;
+        }
+        else if (xRect > (canvas.width - widthRect)){                                                           // Definir el borde de la barra por la derecha en el eje x
+          xRect = canvas.width - widthRect;
+        }
+        
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);         // Limpiar el canvas
+        ctx.drawImage(img , 0, 0, canvas.width, canvas.height);   // Cargar el fondo
+        ctx.beginPath();                                          // Pintar la bola
+        ctx.arc(xBall, yBall, r, sAngle, eAngle);
+        ctx.fill();
+        ctx.fillRect(xRect, yRect, widthRect, heightRect);
+        window.requestAnimationFrame(draw);
+      
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+.justificado{
+    text-align: justify;
+}
+.centrar-texto{
+    text-align: center;
+}
+.derecha{
+    text-align: right;
+}
+.centro{
+    display: block;
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+.boton-centrado{
+        width: 110px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+}
+.ancho{
+    width: 40%;
+}
+.img-centro{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

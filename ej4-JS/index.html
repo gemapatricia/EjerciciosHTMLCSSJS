@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html [lang="es" ]>
+  <head>
+    <title>Generador de contraseñas aleatorias</title>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Contraseñas aleatorias" />
+    <meta name="keywords" content="HTML, CSS, JavaScript" />
+    <meta name="author" content="Patricia Herrera" />
+    <meta name="viewport" content="width=device-width, initialscale=1.0" />
+    <link rel="stylesheet" href="estilo.css" />
+  </head>
+  <body>
+    <h1 class="centrado">Generador de contraseñas</h1>
+    <p>
+      Para generar contraseñas aleatorias, solo tendrá que seleccionar el número
+      de palabras que desea concatenar.
+    </p>
+    <form id="form">
+      <label>Número de palabras</label>
+      <input type="text" name="number" id="number" required/>
+    </form>
+    <label id="gris">El mínimo de palabras es una y el máximo es diez</label>
+    <br />
+    <br />
+    <input
+      type="submit"
+      value="Generar contraseña"
+      id="boton"
+      onclick="getNumber()"
+    />
+    <p id="result"></p>
+
+    <script>
+      function getNumber() {
+        let number = document.getElementById("number").value;
+        if (number > 0 && number <11){
+          let password = createPassword(number);
+          displayResult(password);
+        }
+        else {
+          document.getElementById("result").innerHTML = "Número de palabras para generar la contraseña inválido (de 1 a 10 palabras)";
+        }
+      }
+    </script>
+
+    <script>
+      const dictionary = ["the","of","and","a","to","in","is","you","that","it","he","was","for",
+      "on","are","as","with","his","they","I","at","be","this","have","from","or","one","had","by",
+      "word","but","not","what","all","were","we","when","your","can","said","there","use","an","each",
+      "which","she","do","how","their","if","will","up","other","about","out","many","then","them",
+      "these","so","some","her","would","make","like","him","into","time","has","look","two","more",
+      "write","go","see","number","no","way","could","people","my","than","first","water","been","call",
+      "who","oil","its","now","find","long","down","day","did","get","come","made","may","part"];
+      
+
+      function createPassword(number) {
+        let i = 0;
+        let position;
+        let word;
+        let password = "";
+
+        while (i < number) {
+          position = Math.floor(Math.random() * (dictionary.length-1));
+          word = dictionary[position];
+          password = password + word;
+          i++;
+        }
+        return password;
+      }
+    </script>
+
+    <script>
+      function displayResult(password) {
+        document.getElementById("result").innerHTML = password;
+      }
+    </script>
+  </body>
+</html>
